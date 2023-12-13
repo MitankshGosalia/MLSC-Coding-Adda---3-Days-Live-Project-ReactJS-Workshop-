@@ -1,21 +1,28 @@
 import React from "react";
-import Sidebar from "../components/Sidebar/Sidebar";
-import Movies from "../components/Movies/Movies";
-import { useGetGenresQuery } from "../services/Api";
+import { FaStar, FaStarHalfAlt } from "react-icons/fa";
+import { AiOutlineStar } from "react-icons/ai";
 
-const Genre = () => {
-  const { data } = useGetGenresQuery();
+const Stars = ({ starVote }) => {
+  const stars = starVote / 2;
+  const ratingStar = Array.from({ length: 5 }, (element, index) => {
+    let number = index + 0.5;
+
+    return (
+      <span key={index}>
+        {stars >= index + 1 ? (
+          <FaStar className="text-base text-yellow-500" />
+        ) : stars >= number ? (
+          <FaStarHalfAlt className="text-base text-yellow-500" />
+        ) : (
+          <AiOutlineStar className="text-base text-yellow-500" />
+        )}
+      </span>
+    );
+  });
 
   return (
-    <div className="flex flex-col items-center justify-start">
-      <div className="h-[100px] w-full">
-        <Sidebar />
-      </div>
-      <div className="w-full">
-        <Movies movie={data} />
-      </div>
-    </div>
+    <div className="mt-2 flex items-center justify-center">{ratingStar}</div>
   );
 };
 
-export default Genre;
+export default Stars;
